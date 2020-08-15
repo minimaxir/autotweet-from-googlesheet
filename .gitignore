@@ -1,2 +1,3 @@
 *.json
 test.py
+.env
