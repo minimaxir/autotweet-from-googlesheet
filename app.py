@@ -45,9 +45,9 @@ async def post_tweet(request):
     ws = sh.worksheet(SHEET_NAME)
 
     tweets = ws.get_all_records()
-    tweets_filtered = list(filter(lambda x: not x["tweet_timestamp"], tweets))
+    tweets_filtered = list(filter(lambda x: not x["Tweet Timestamp"], tweets))
     assert len(tweets_filtered) > 0, "No untweeted tweets remaining"
-    tweet = random.choice(tweets_filtered)["tweet"]
+    tweet = random.choice(tweets_filtered)["Tweet"]
 
     # Post the tweet to Twitter
     t = api.update_status(tweet.tweet)
