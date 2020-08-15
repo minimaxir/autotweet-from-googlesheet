@@ -22,6 +22,7 @@ assert all(
 SHEET_KEY = os.environ.get("SHEET_KEY")
 SHEET_NAME = os.environ.get("SHEET_NAME", "Sheet1")
 SERVICE_ACCOUNT_KEY = os.environ.get("SERVICE_ACCOUNT_KEY", "key.json")
+RANDOMIZE = os.environ.get("RANDOMIZE", 1)
 
 assert SHEET_KEY, "A SHEET_KEY must be specified"
 
@@ -44,14 +45,18 @@ async def post_tweet(request):
     sh = gc.open_by_key(SHEET_KEY)
     ws = sh.worksheet(SHEET_NAME)
 
+    # Select a tweet
     tweets = ws.get_all_records()
     tweets_filtered = list(filter(lambda x: not x["Tweet Timestamp"], tweets))
     assert len(tweets_filtered) > 0, "No untweeted tweets remaining"
-    tweet = random.choice(tweets_filtered)["Tweet"]
+    if RANDOMIZE:
+        tweet = random.choice(tweets_filtered)["Tweet"]
+    else:
+        tweet = tweets_filtered[0]["Tweet"]
 
     # Post the tweet to Twitter
-    t = api.update_status(tweet.tweet)
-    t_timestamp = time.strftime("%Y-%m-%d %H:%M:%S+00", time.gmtime())
+    t = api.update_status(tweet)
+    t_timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
     t_url = f"https://twitter.com/{t.user.screen_name}/status/{t.id_str}"
 
     # Update the corresponding Google Sheet row w/ metadata

@@ -33,6 +33,7 @@ Create a Cloud Run service using the uploaded container, (128MB Memory is suffic
 - SHEET_KEY
 - SHEET_NAME (default: `Sheet1`)
 - SERVICE_ACCOUNT_KEY (default: `key.json`)
+- RANDOMIZE (default: `1`, set to 0 to tweet untweeted tweets as they appear in the sheet)
 
 Then, set up Google Cloud Scheduler which hits the service. (you can set a cron for the container timing).
 
