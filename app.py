@@ -32,6 +32,14 @@ app = Starlette(debug=False)
 response_header = {"Access-Control-Allow-Origin": "*"}
 
 
+async def validate_tweet(tweet: dict):
+    return (
+        not tweet["Tweet Timestamp"]
+        and len(tweet["Tweet"] > 0)
+        and len(tweet["Tweet"] <= 280)
+    )
+
+
 @app.route("/", methods=["GET", "POST", "HEAD"])
 async def post_tweet(request):
 
@@ -47,7 +55,7 @@ async def post_tweet(request):
 
     # Select a tweet
     tweets = ws.get_all_records()
-    tweets_filtered = list(filter(lambda x: not x["Tweet Timestamp"], tweets))
+    tweets_filtered = list(filter(validate_tweet, tweets))
     assert len(tweets_filtered) > 0, "No untweeted tweets remaining"
     if RANDOMIZE:
         tweet = random.choice(tweets_filtered)["Tweet"]
