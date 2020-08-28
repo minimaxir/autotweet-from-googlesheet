@@ -1,6 +1,6 @@
 # autotweet-from-googlesheet
 
-A minimal proof-of-concept to tweet human-curated Tweets on a schedule using [Google Cloud Run](https://cloud.google.com/run) and [Google Cloud Scheduler](https://cloud.google.com/scheduler) sourced from [Google Sheets](https://www.google.com/sheets/about/), making running the bot free and can scale to effectively an unlimited number of bots if necessary.
+A minimal proof-of-concept Python script to tweet human-curated Tweets on a schedule using [Google Cloud Run](https://cloud.google.com/run) and [Google Cloud Scheduler](https://cloud.google.com/scheduler) sourced from [Google Sheets](https://www.google.com/sheets/about/), making running the bot free and can scale to effectively an unlimited number of bots if necessary.
 
 This tool is intended to be used for curated AI-generated tweets, e.g. generated from [GPT-3](https://openai.com/blog/openai-api/).
 
